@@ -13,6 +13,15 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
+  @font-face{
+    font-family:'TT Neoris Pro';
+    src:url('assets/fonts/TT_Neoris_Pro_Black_Italic.woff') format('woff');
+    font-weight:400 900;
+    font-style:normal;
+    font-display:swap;
+  }
+  /* Display headings → TT Neoris Pro (heavy neo-grotesque); body stays IBM Plex for readability */
+  [lang="ar"] h1,[lang="ar"] h2{font-family:'TT Neoris Pro','IBM Plex Sans Arabic',sans-serif !important;font-weight:400 !important;letter-spacing:0 !important}
   html{scroll-behavior:smooth}
   body{background:#05070f;color:#f4f6fb;font-family:'IBM Plex Sans Arabic',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   ::selection{background:rgba(91,127,255,.35);color:#fff}
@@ -29,6 +38,36 @@
   @keyframes amSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
   @keyframes amDot{0%{transform:translateY(0);opacity:0}10%{opacity:1}100%{transform:translateY(-220px);opacity:0}}
   @keyframes amBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  @keyframes amMenuIn{0%{opacity:0;transform:translateY(-10px)}100%{opacity:1;transform:translateY(0)}}
+  html,body{max-width:100%;overflow-x:hidden}
+  img{max-width:100%}
+  [data-burger]{display:none}
+  /* ---------- TABLET ---------- */
+  @media (max-width:1024px){
+    [lang="ar"] > section{padding-left:30px !important;padding-right:30px !important}
+  }
+  /* ---------- MOBILE & SMALL TABLET ---------- */
+  @media (max-width:820px){
+    [data-navlinks]{display:none !important}
+    [data-nav-cta]{display:none !important}
+    [data-burger]{display:inline-flex !important}
+  }
+  @media (max-width:768px){
+    [lang="ar"] > section{padding-top:76px !important;padding-bottom:76px !important;padding-left:20px !important;padding-right:20px !important}
+    [data-hero-inner]{padding:108px 20px 90px !important}
+    [data-nav-inner]{padding:13px 18px !important;gap:12px !important}
+    [data-dash-grid]{grid-template-columns:1fr !important;min-height:0 !important}
+    [data-sidebar]{flex-direction:row !important;flex-wrap:wrap !important;border-left:none !important;border-bottom:1px solid rgba(120,140,220,.1) !important;gap:6px !important}
+    [data-dash-inner]{grid-template-columns:1fr !important}
+    [data-stat-cell]{border-left:none !important;border-top:1px solid rgba(120,140,220,.1) !important}
+  }
+  /* ---------- PHONE ---------- */
+  @media (max-width:480px){
+    [lang="ar"] > section{padding-top:62px !important;padding-bottom:62px !important;padding-left:16px !important;padding-right:16px !important}
+    [data-hero-inner]{padding:100px 16px 78px !important}
+    [data-cta-box]{padding:28px 18px !important}
+    [data-dash-mainpad]{padding:16px !important}
+  }
 </style>
 </helmet>
 <div ref="{{ rootRef }}" dir="rtl" lang="ar" style="position:relative;width:100%;min-height:100vh;background:#05070f;--accent:#325dde;--accent-bright:#5b7fff;--glow:rgba(91,127,255,.55);overflow:hidden">
@@ -59,7 +98,7 @@
 
   <!-- ===================== NAV ===================== -->
   <nav ref="{{ navRef }}" style="position:fixed;top:0;right:0;left:0;z-index:100;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent">
-    <div style="max-width:1240px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <div data-nav-inner style="max-width:1240px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px">
       <img src="assets/logo-light.png" alt="أعمدة" style="height:34px;width:auto;display:block"/>
       <div style="display:none;align-items:center;gap:34px" data-navlinks>
         <a href="#why" onMouseEnter="{{ onLinkEnter }}" onMouseLeave="{{ onLinkLeave }}" style="color:#aeb6d0;text-decoration:none;font-size:15px;font-weight:400;transition:color .25s" style-hover="color:#fff">لماذا أعمدة</a>
@@ -67,7 +106,21 @@
         <a href="#system" onMouseEnter="{{ onLinkEnter }}" onMouseLeave="{{ onLinkLeave }}" style="color:#aeb6d0;text-decoration:none;font-size:15px;font-weight:400;transition:color .25s" style-hover="color:#fff">النظام الذكي</a>
         <a href="#results" onMouseEnter="{{ onLinkEnter }}" onMouseLeave="{{ onLinkLeave }}" style="color:#aeb6d0;text-decoration:none;font-size:15px;font-weight:400;transition:color .25s" style-hover="color:#fff">النتائج</a>
       </div>
-      <a href="#contact" onMouseEnter="{{ onBtnEnter }}" onMouseLeave="{{ onLinkLeave }}" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-bright));color:#fff;text-decoration:none;font-size:14px;font-weight:600;box-shadow:0 8px 28px -8px var(--glow);transition:transform .25s,box-shadow .25s;white-space:nowrap" style-hover="transform:translateY(-2px);box-shadow:0 14px 36px -8px var(--glow)">احجز استشارة</a>
+      <a href="#contact" data-nav-cta onMouseEnter="{{ onBtnEnter }}" onMouseLeave="{{ onLinkLeave }}" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-bright));color:#fff;text-decoration:none;font-size:14px;font-weight:600;box-shadow:0 8px 28px -8px var(--glow);transition:transform .25s,box-shadow .25s;white-space:nowrap" style-hover="transform:translateY(-2px);box-shadow:0 14px 36px -8px var(--glow)">انتظرونا قريبًا</a>
+      <button data-burger ref="{{ burgerRef }}" onClick="{{ toggleMenu }}" aria-label="القائمة" style="display:none;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid rgba(120,140,220,.22);background:rgba(255,255,255,.03);cursor:pointer;flex-shrink:0">
+        <span ref="{{ burgerIconRef }}" style="position:relative;width:18px;height:12px;display:block">
+          <span style="position:absolute;top:0;right:0;width:100%;height:2px;border-radius:2px;background:#e7ebf6;transition:transform .3s,top .3s"></span>
+          <span style="position:absolute;top:5px;right:0;width:100%;height:2px;border-radius:2px;background:#e7ebf6;transition:opacity .2s"></span>
+          <span style="position:absolute;top:10px;right:0;width:100%;height:2px;border-radius:2px;background:#e7ebf6;transition:transform .3s,top .3s"></span>
+        </span>
+      </button>
+    </div>
+    <div ref="{{ menuRef }}" style="display:none;flex-direction:column;gap:4px;padding:8px 18px 20px;background:rgba(5,7,15,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(120,140,220,.12)">
+      <a href="#why" onClick="{{ closeMenu }}" style="padding:13px 14px;border-radius:11px;color:#cbd2e6;text-decoration:none;font-size:16px;font-weight:400;transition:background .2s" style-hover="background:rgba(91,127,255,.08)">لماذا أعمدة</a>
+      <a href="#journey" onClick="{{ closeMenu }}" style="padding:13px 14px;border-radius:11px;color:#cbd2e6;text-decoration:none;font-size:16px;font-weight:400;transition:background .2s" style-hover="background:rgba(91,127,255,.08)">الرحلة</a>
+      <a href="#system" onClick="{{ closeMenu }}" style="padding:13px 14px;border-radius:11px;color:#cbd2e6;text-decoration:none;font-size:16px;font-weight:400;transition:background .2s" style-hover="background:rgba(91,127,255,.08)">النظام الذكي</a>
+      <a href="#results" onClick="{{ closeMenu }}" style="padding:13px 14px;border-radius:11px;color:#cbd2e6;text-decoration:none;font-size:16px;font-weight:400;transition:background .2s" style-hover="background:rgba(91,127,255,.08)">النتائج</a>
+      <a href="#contact" onClick="{{ closeMenu }}" style="margin-top:8px;padding:14px;border-radius:12px;text-align:center;background:linear-gradient(135deg,var(--accent),var(--accent-bright));color:#fff;text-decoration:none;font-size:16px;font-weight:600;box-shadow:0 10px 28px -10px var(--glow)">انتظرونا قريبًا</a>
     </div>
   </nav>
 
@@ -80,7 +133,7 @@
     <!-- grid -->
     <div style="position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.5;background-image:linear-gradient(rgba(120,140,220,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(120,140,220,.06) 1px,transparent 1px);background-size:64px 64px;animation:amGridPan 14s linear infinite;-webkit-mask-image:radial-gradient(circle at 50% 38%,#000,transparent 72%);mask-image:radial-gradient(circle at 50% 38%,#000,transparent 72%)"></div>
 
-    <div style="position:relative;z-index:5;max-width:1000px;padding:120px 32px 80px;text-align:center" data-parallax="0.18">
+    <div data-hero-inner style="position:relative;z-index:5;max-width:1000px;padding:120px 32px 80px;text-align:center" data-parallax="0.18">
       <div data-amr style="opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border-radius:999px;border:1px solid rgba(120,140,220,.2);background:rgba(91,127,255,.07);margin-bottom:30px">
         <span style="width:7px;height:7px;border-radius:50%;background:var(--accent-bright);box-shadow:0 0 10px var(--glow);animation:amPulse 2.4s ease-in-out infinite"></span>
         <span style="font-size:13px;color:#b9c1dc;font-weight:400">وكالة تأسيس الأنظمة التشغيلية للمتاجر</span>
@@ -88,7 +141,7 @@
       <h1 data-amr style="opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.16,1,.3,1) .08s,transform 1s cubic-bezier(.16,1,.3,1) .08s;font-size:clamp(2.6rem,6.4vw,5.4rem);font-weight:600;line-height:1.08;letter-spacing:-.02em;background:linear-gradient(180deg,#ffffff 30%,#aab4d8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:26px">نبني أساس التشغيل<br/>لينمو متجرك بثقة</h1>
       <p data-amr style="opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.16,1,.3,1) .18s,transform 1s cubic-bezier(.16,1,.3,1) .18s;max-width:680px;margin:0 auto 40px;font-size:clamp(1rem,1.4vw,1.22rem);line-height:2;color:#9aa3bf;font-weight:300">لا نقدّم استشارات نظرية ولا تقارير تُنسى بعد الاجتماع. نؤسس نظامًا تشغيليًا عمليًا يناسب متجرك، يوضّح المهام وينظّم الفريق ويجعل العمل اليومي أكثر كفاءة واستقرارًا.</p>
       <div data-amr style="opacity:0;transform:translateY(26px);transition:opacity 1s cubic-bezier(.16,1,.3,1) .28s,transform 1s cubic-bezier(.16,1,.3,1) .28s;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-        <a href="#contact" onMouseEnter="{{ onBtnEnter }}" onMouseLeave="{{ onLinkLeave }}" style="position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-bright));color:#fff;text-decoration:none;font-size:16px;font-weight:600;box-shadow:0 16px 40px -12px var(--glow);transition:transform .3s,box-shadow .3s;overflow:hidden" style-hover="transform:translateY(-3px);box-shadow:0 22px 50px -12px var(--glow)">احجز استشارة مجانية
+        <a href="#contact" onMouseEnter="{{ onBtnEnter }}" onMouseLeave="{{ onLinkLeave }}" style="position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-bright));color:#fff;text-decoration:none;font-size:16px;font-weight:600;box-shadow:0 16px 40px -12px var(--glow);transition:transform .3s,box-shadow .3s;overflow:hidden" style-hover="transform:translateY(-3px);box-shadow:0 22px 50px -12px var(--glow)">انتظرونا قريبًا
           <span style="font-size:18px;line-height:1">←</span>
         </a>
         <a href="#journey" onMouseEnter="{{ onLinkEnter }}" onMouseLeave="{{ onLinkLeave }}" style="display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(120,140,220,.22);color:#e7ebf6;text-decoration:none;font-size:16px;font-weight:500;backdrop-filter:blur(8px);transition:transform .3s,border-color .3s,background .3s" style-hover="transform:translateY(-3px);border-color:rgba(91,127,255,.5);background:rgba(91,127,255,.08)">اكتشف رحلة الثلاثة أشهر</a>
@@ -160,7 +213,7 @@
           </div>
         </sc-for>
       </div>
-      <div data-amr style="opacity:0;transform:translateY(20px);transition:all .9s cubic-bezier(.16,1,.3,1);margin-top:54px;text-align:center;padding:38px;border-radius:22px;border:1px solid rgba(91,127,255,.18);background:linear-gradient(160deg,rgba(91,127,255,.08),transparent)">
+      <div data-amr data-cta-box style="opacity:0;transform:translateY(20px);transition:all .9s cubic-bezier(.16,1,.3,1);margin-top:54px;text-align:center;padding:38px;border-radius:22px;border:1px solid rgba(91,127,255,.18);background:linear-gradient(160deg,rgba(91,127,255,.08),transparent)">
         <p style="font-size:clamp(1.3rem,2.6vw,2rem);font-weight:500;line-height:1.6">فأنت لا تحتاج موظفين أكثر — <span style="color:var(--accent-bright)">بل تحتاج أساسًا تشغيليًا أفضل.</span></p>
       </div>
     </div>
@@ -247,7 +300,7 @@
           <div style="margin-right:auto;font-size:12px;color:#6c769a;font-family:'IBM Plex Mono',monospace">amedah.os / لوحة المتابعة</div>
           <span style="font-size:11px;color:#4f7bff;border:1px solid rgba(91,127,255,.3);border-radius:6px;padding:3px 9px">مباشر</span>
         </div>
-        <div style="display:grid;grid-template-columns:200px 1fr;min-height:440px">
+        <div data-dash-grid style="display:grid;grid-template-columns:200px 1fr;min-height:440px">
           <!-- sidebar -->
           <div style="border-left:1px solid rgba(120,140,220,.1);padding:20px 16px;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.01)" data-sidebar>
             <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:linear-gradient(135deg,rgba(91,127,255,.18),rgba(50,93,222,.05));border:1px solid rgba(91,127,255,.2)">
@@ -262,7 +315,7 @@
             </sc-for>
           </div>
           <!-- main -->
-          <div style="padding:24px;display:flex;flex-direction:column;gap:18px">
+          <div data-dash-mainpad style="padding:24px;display:flex;flex-direction:column;gap:18px">
             <!-- KPI row -->
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px">
               <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
@@ -275,7 +328,7 @@
               </sc-for>
             </div>
             <!-- chart + tasks -->
-            <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:14px;flex:1">
+            <div data-dash-inner style="display:grid;grid-template-columns:1.5fr 1fr;gap:14px;flex:1">
               <div style="padding:20px;border-radius:16px;border:1px solid rgba(120,140,220,.12);background:rgba(255,255,255,.015);display:flex;flex-direction:column">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:auto">
                   <span style="font-size:13px;color:#aeb6d0;font-weight:500">أداء التشغيل الأسبوعي</span>
@@ -331,7 +384,7 @@
       <!-- stat strip -->
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;border:1px solid rgba(120,140,220,.12);border-radius:22px;overflow:hidden;margin-bottom:48px;background:linear-gradient(160deg,rgba(91,127,255,.05),transparent)" data-stagger>
         <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
-          <div data-amr style="opacity:0;transform:translateY(24px);transition:all .9s cubic-bezier(.16,1,.3,1);padding:40px 30px;text-align:center;border-left:1px solid rgba(120,140,220,.1)">
+          <div data-amr data-stat-cell style="opacity:0;transform:translateY(24px);transition:all .9s cubic-bezier(.16,1,.3,1);padding:40px 30px;text-align:center;border-left:1px solid rgba(120,140,220,.1)">
             <div style="display:flex;align-items:baseline;justify-content:center;gap:2px;margin-bottom:12px">
               <span data-count="{{ s.val }}" data-suffix="{{ s.suffix }}" style="font-size:clamp(2.6rem,6vw,4rem);font-weight:600;font-family:'IBM Plex Mono',monospace;background:linear-gradient(180deg,#fff,var(--accent-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">0</span>
             </div>
@@ -364,7 +417,7 @@
     <div data-amr style="opacity:0;transform:translateY(34px);transition:all 1s cubic-bezier(.16,1,.3,1);position:relative;z-index:2;max-width:820px;margin:0 auto;text-align:center">
       <h2 style="font-size:clamp(2.1rem,5.4vw,4rem);font-weight:600;line-height:1.18;letter-spacing:-.02em;margin-bottom:26px;background:linear-gradient(180deg,#fff 40%,#aab4d8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">متجرك يستحق نظامًا يعمل<br/>حتى عندما لا تكون موجودًا</h2>
       <p style="font-size:clamp(1rem,1.5vw,1.2rem);color:#9aa3bf;line-height:1.9;margin-bottom:42px;font-weight:300">ابدأ رحلة التأسيس اليوم، واجعل التشغيل أحد أكبر نقاط القوة في متجرك.</p>
-      <a href="#" onMouseEnter="{{ onBtnEnter }}" onMouseLeave="{{ onLinkLeave }}" style="display:inline-flex;align-items:center;gap:12px;padding:18px 42px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent-bright));color:#fff;text-decoration:none;font-size:17px;font-weight:600;box-shadow:0 20px 50px -14px var(--glow);transition:transform .3s,box-shadow .3s" style-hover="transform:translateY(-3px) scale(1.02);box-shadow:0 28px 60px -14px var(--glow)">احجز استشارتك المجانية
+      <a href="#" onMouseEnter="{{ onBtnEnter }}" onMouseLeave="{{ onLinkLeave }}" style="display:inline-flex;align-items:center;gap:12px;padding:18px 42px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent-bright));color:#fff;text-decoration:none;font-size:17px;font-weight:600;box-shadow:0 20px 50px -14px var(--glow);transition:transform .3s,box-shadow .3s" style-hover="transform:translateY(-3px) scale(1.02);box-shadow:0 28px 60px -14px var(--glow)">انتظرونا قريبًا
         <span style="font-size:19px">←</span>
       </a>
     </div>
@@ -374,7 +427,7 @@
   <footer style="position:relative;z-index:5;padding:44px 32px;border-top:1px solid rgba(120,140,220,.1)">
     <div style="max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
       <img src="assets/logo-light.png" alt="أعمدة" style="height:28px;width:auto;opacity:.75"/>
-      <p style="font-size:13px;color:#5d678a;font-weight:300">© 2025 أعمدة — وكالة تأسيس الأنظمة التشغيلية للمتاجر</p>
+      <p style="font-size:13px;color:#5d678a;font-weight:300">© 2026 أعمدة — وكالة تأسيس الأنظمة التشغيلية للمتاجر</p>
     </div>
   </footer>
 
@@ -390,6 +443,10 @@ class Component extends DCLogic {
   progressRef = React.createRef();
   timelineRef = React.createRef();
   timelineFillRef = React.createRef();
+  burgerRef = React.createRef();
+  burgerIconRef = React.createRef();
+  menuRef = React.createRef();
+  state = { menuOpen: false };
 
   renderVals() {
     const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -397,6 +454,9 @@ class Component extends DCLogic {
       rootRef: this.rootRef, canvasRef: this.canvasRef, cursorRef: this.cursorRef,
       glowRef: this.glowRef, navRef: this.navRef, progressRef: this.progressRef,
       timelineRef: this.timelineRef, timelineFillRef: this.timelineFillRef,
+      burgerRef: this.burgerRef, burgerIconRef: this.burgerIconRef, menuRef: this.menuRef,
+      toggleMenu: () => this._setMenu(!this.state.menuOpen),
+      closeMenu: () => this._setMenu(false),
       onLinkEnter: () => this._cursor(2.0, false),
       onBtnEnter: () => this._cursor(2.4, true),
       onLinkLeave: () => this._cursor(1, false),
@@ -460,6 +520,28 @@ class Component extends DCLogic {
     };
   }
 
+  _setMenu(open) {
+    this.setState({ menuOpen: open });
+    const menu = this.menuRef.current;
+    const icon = this.burgerIconRef.current;
+    if (menu) {
+      menu.style.display = open ? 'flex' : 'none';
+      if (open) menu.style.animation = 'amMenuIn .28s cubic-bezier(.16,1,.3,1)';
+    }
+    if (icon) {
+      const bars = icon.children;
+      if (open) {
+        bars[0].style.top = '5px'; bars[0].style.transform = 'rotate(45deg)';
+        bars[1].style.opacity = '0';
+        bars[2].style.top = '5px'; bars[2].style.transform = 'rotate(-45deg)';
+      } else {
+        bars[0].style.top = '0'; bars[0].style.transform = 'none';
+        bars[1].style.opacity = '1';
+        bars[2].style.top = '10px'; bars[2].style.transform = 'none';
+      }
+    }
+  }
+
   _cursor(scale, filled) {
     const c = this.cursorRef.current;
     if (!c) return;
@@ -475,10 +557,12 @@ class Component extends DCLogic {
     const reduce = !!(this.props && this.props.reduceMotion) || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this._applyAccent();
 
-    // responsive nav links
+    const isMobile = () => window.innerWidth <= 820;
+    // responsive nav links (CSS hides on mobile via !important; JS only shows on desktop)
     const setNav = () => {
       const links = root.querySelector('[data-navlinks]');
       if (links) links.style.display = window.innerWidth > 820 ? 'flex' : 'none';
+      if (!isMobile() && this.state.menuOpen) this._setMenu(false);
     };
     setNav();
     window.addEventListener('resize', setNav);
@@ -609,8 +693,11 @@ class Component extends DCLogic {
       });
     }
 
-    // ---- hero pillars canvas ----
+    // ---- hero pillars canvas (lighter on mobile) ----
     if (!reduce) this._initCanvas(() => ({ mx, my }));
+
+    // close mobile menu when a hash link is tapped / on outside scroll
+    window.addEventListener('scroll', () => { if (this.state.menuOpen) this._setMenu(false); }, { passive: true });
   }
 
   _applyAccent() {
